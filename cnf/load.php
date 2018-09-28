@@ -11,7 +11,7 @@ $SUPPORT = "suport@n2y.com.br";
 $SUPORTNAME = "Equipe de Suporte ao Cliente";
 $NOREPLY = "no-reply@n2y.com.br";
 $NOREPLYNAME = "Não Responda";
-$Version = "0.1.01a";
+$Version = "0.1.01b";
 /* * *****************************************
   DEFINIÇÃO DO SERVIDOR DE EMAILS
  * ***************************************** */
