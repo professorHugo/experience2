@@ -1,5 +1,6 @@
 <h2>Documentos das aulas</h2>
 <!--Será necessário refazer essa etapa, pois está com erros na exibição das aulas-->
+<!--Testando as sincronizações-->
 <?php
 echo $NomeLogado;
 $MatriculaLogada = $_SESSION['Login']['matricula'];
