@@ -34,41 +34,43 @@ create table usuarios(
     ativado int(1) default 0 comment '0 Para inativo, 1 para ativo'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci;
 
-create table aulas(
-    id int(11) not null primary key auto_increment,
-    numero_aula int(1) not null,
-    titulo_aula varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL,
-    img_capa varchar(255) COLLATE utf8_general_mysql500_ci default 'img/default',
-    img_docs varchar(255) COLLATE utf8_general_mysql500_ci default 'img/img00',
-    link_apresentacao varchar(255) COLLATE utf8_general_mysql500_ci default '?',
-    link_documento varchar(255) COLLATE utf8_general_mysql500_ci default '?'
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci;
+CREATE TABLE `aulas` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `numero_aula` int(1) NOT NULL,
+ `titulo_aula` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL,
+ `img_capa` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT 'img/default',
+ `img_docs` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT 'img/img00',
+ `link_apresentacao` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT '?',
+ `link_documento` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT '?',
+ `link_video` varchar(500) COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Link do vídeo usado na aula para apresentação do conetúdo',
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci
 
 
 /**
 Tabelas do banco de dados
 **/
 
-INSERT INTO `aulas` (`id`, `numero_aula`, `titulo_aula`, `img_capa`, `img_docs`, `link_apresentacao`, `link_documento`) VALUES
-(1, 1, 'Cloud Computing', 'img/Aula1', 'img/img01', 'https://drive.google.com/open?id=0Bx4hVCOh5y-Xem92aXFaanJPcmM', 'https://drive.google.com/open?id=0B4tUvFXK86gKR2x2and1dTRxTkU'),
-(2, 2, 'Vocabulary', 'img/Aula2', 'img/img02', 'https://drive.google.com/open?id=0Bx4hVCOh5y-XWVNHNzI1ZW9lRnM', '...'),
-(3, 3, 'Contrato de Trabalho', 'img/Aula3', 'img/img03', 'https://drive.google.com/open?id=0Bx4hVCOh5y-XMjhyT1JPdFNreVE','https://drive.google.com/open?id=0B4tUvFXK86gKTEkzd1E1YVVDM1k'),
-(4, 4, 'Identidade Visual', 'img/Aula4', 'img/img04', 'https://drive.google.com/open?id=0Bx4hVCOh5y-XOGVMd0lOY3NHZjQ','...'),
-(5, 5, 'Painel de Controle', 'img/Aula5', 'img/img05', 'https://drive.google.com/open?id=0Bx4hVCOh5y-XRU45YngtVWxpUU0','https://drive.google.com/open?id=0B4tUvFXK86gKZFZNYnR0OFN6TFU'),
-(6, 6, 'Chunks', 'img/Aula6', 'img/img06', 'https://drive.google.com/open?id=0Bx4hVCOh5y-XbFRheXZnbFBsRGs','https://drive.google.com/open?id=0B4tUvFXK86gKWFBBTmtObE1TemM'),
-(7, 7, 'Empreendedorismo', 'img/Aula7', 'img/img07', 'https://drive.google.com/open?id=0Bx4hVCOh5y-XbnNfQ1VIYWRpOTA','https://drive.google.com/open?id=0B4tUvFXK86gKZDlJUFR3dGVkdFk'),
-(8, 8, 'Formatação de Computadores', 'img/Aula8', 'img/img08', 'https://drive.google.com/open?id=0Bx4hVCOh5y-XQkEyWlQwNU51M0U','https://drive.google.com/open?id=0Bx4hVCOh5y-XTEpmS0ZqdGtFSms');
+INSERT INTO `aulas` (`id`, `numero_aula`, `titulo_aula`, `img_capa`, `img_docs`, `link_apresentacao`, `link_documento`, `link_video`) VALUES
+(1, 1, 'Cloud Computing', 'img/Aula1', 'img/img01', 'https://drive.google.com/open?id=0Bx4hVCOh5y-Xem92aXFaanJPcmM', 'https://drive.google.com/open?id=0B4tUvFXK86gKR2x2and1dTRxTkU', 'https://www.youtube.com/watch?v=FDFejm-ovtI'),
+(2, 2, 'Vocabulary', 'img/Aula2', 'img/img02', 'https://drive.google.com/open?id=0Bx4hVCOh5y-XWVNHNzI1ZW9lRnM', '', 'https://www.youtube.com/watch?v=D_1QgnnVT4c'),
+(3, 3, 'Contrato de Trabalho', 'img/Aula3', 'img/img03', 'https://drive.google.com/open?id=0Bx4hVCOh5y-XMjhyT1JPdFNreVE', 'https://drive.google.com/open?id=0B4tUvFXK86gKTEkzd1E1YVVDM1k', 'https://www.youtube.com/watch?v=IYEthTyzbLc'),
+(4, 4, 'Identidade Visual', 'img/Aula4', 'img/img04', 'https://drive.google.com/open?id=0Bx4hVCOh5y-XOGVMd0lOY3NHZjQ', '', 'https://www.youtube.com/watch?v=NWN4PsTV4ck'),
+(5, 5, 'Painel de Controle', 'img/Aula5', 'img/img05', 'https://drive.google.com/open?id=0Bx4hVCOh5y-XRU45YngtVWxpUU0', 'https://drive.google.com/open?id=0B4tUvFXK86gKZFZNYnR0OFN6TFU', 'https://www.youtube.com/watch?v=Tk5QUGXcWio'),
+(6, 6, 'Chunks', 'img/Aula6', 'img/img06', 'https://drive.google.com/open?id=0Bx4hVCOh5y-XbFRheXZnbFBsRGs', 'https://drive.google.com/open?id=0B4tUvFXK86gKWFBBTmtObE1TemM', 'https://www.youtube.com/watch?v=EAi9PVxQZ_U'),
+(7, 7, 'Empreendedorismo', 'img/Aula7', 'img/img07', 'https://drive.google.com/open?id=0Bx4hVCOh5y-XbnNfQ1VIYWRpOTA', 'https://drive.google.com/open?id=0B4tUvFXK86gKZDlJUFR3dGVkdFk', 'https://www.youtube.com/watch?v=uyM0y0PWW4w'),
+(8, 8, 'FormataÃ§Ã£o de Computadores', 'img/Aula8', 'img/img08', 'https://drive.google.com/open?id=0Bx4hVCOh5y-XQkEyWlQwNU51M0U', 'https://drive.google.com/open?id=0Bx4hVCOh5y-XTEpmS0ZqdGtFSms', 'https://www.youtube.com/watch?v=QXT7oubQ-Ng');
 
 INSERT INTO `usuarios` (`id`, `matricula`, `matricula_md5`, `senha`, `senha_md5`, `nome`, `idade`, `aula1`, `aula2`, `aula3`, `aula4`, `aula5`, `aula6`, `aula7`, `aula8`, `prova1`, `prova2`, `prova3`, `prova4`, `prova5`, `prova6`, `prova7`, `prova8`, `permissao`) VALUES (NULL, 'experience', 'd6e047923b2b0f63a7a03c66074a0151', 'experience', 'd6e047923b2b0f63a7a03c66074a0151', 'Administrador', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2');
 
 CREATE table questoes_provas(
-  id_prova int not null PRIMARY KEY AUTO_INCREMENT,
+  id_prova int PRIMARY KEY AUTO_INCREMENT,
   modulo_prova int not null,
   pergunta_prova varchar(500) not null,
+  id_resposta_correta int not null,
   FOREIGN KEY(modulo_prova) REFERENCES aulas(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci;
 
-INSERT INTO `questoes_provas`(`id_prova`,`modulo_prova`,`pergunta_prova`,`id_resposta_correta`)VALUES (`1`,1,`Qual a funÃ§Ã£o do sistema de Cloud Computing?`,1);
 
 CREATE TABLE respostas_provas(
   id int not null primary key auto_increment,
@@ -80,8 +82,10 @@ CREATE TABLE respostas_provas(
   FOREIGN KEY(modulo_pergunta) REFERENCES aulas(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci;
 
+INSERT INTO `questoes_provas`(`id_prova`,`modulo_prova`,`pergunta_prova`,`id_resposta_correta`)VALUES (NULL,`1`,`Qual a funÃ§Ã£o do sistema de Cloud Computing?`,1);
+
 /*Registros das respostas*/
-INTO `respostas_provas` (`id`, `id_pergunta`, `modulo_pergunta`, `resposta`, `verdadeira`) VALUES (NULL, '1', '1', 'Armazenar informaÃ§Ãµes de forma segura e eficiente usando a internet como meio de comunicaÃ§Ã£o', '1'), (NULL, '1', '1', 'Baixar Músicas da internet', '0'), (NULL, '1', '1', 'Baixar fotos da internet', '0'), (NULL, '1', '1', 'Baixar filmes da internet', '0');
+INSERT INTO `respostas_provas` (`id`, `id_pergunta`, `modulo_pergunta`, `resposta`, `verdadeira`) VALUES (NULL, '1', '1', 'Armazenar informaÃ§Ãµes de forma segura e eficiente usando a internet como meio de comunicaÃ§Ã£o', '1'), (NULL, '1', '1', 'Baixar Músicas da internet', '0'), (NULL, '1', '1', 'Baixar fotos da internet', '0'), (NULL, '1', '1', 'Baixar filmes da internet', '0');
 INSERT INTO `respostas_provas` (`id`, `id_pergunta`, `modulo_pergunta`, `resposta`, `verdadeira`) VALUES (NULL, '2', '1', 'Google - 15GB, OneDrive - 5GB, Mega - AtÃ© 50GB, Dropbox - Inicialmente 2GB', '1'), (NULL, '2', '1', 'Google - 10GB, OneDrive - 5GB, Mega - 500GB, DropBox - Ilimitado', '0'), (NULL, '2', '1', 'Google - 100GB, OneDrive - 50GB, Mega - 30GB, DropBox - 30GB', '0'), (NULL, '2', '1', 'Google - 70GB, OneDrive - 50GB, Mega - 5GB, DropBox - 10GB', '0');
 INSERT INTO `respostas_provas` (`id`, `id_pergunta`, `modulo_pergunta`, `resposta`, `verdadeira`) VALUES (NULL, '3', '1', 'UtlizaÃ§Ã£o independente do sistema, compartilhamento no ambiente corporativo simplificado', '1'), (NULL, '3', '1', 'Resposta errada 1', '0'), (NULL, '3', '1', 'Resposta errada 2', '0'), (NULL, '3', '1', 'Resposta errada 3', '0');
 INSERT INTO `respostas_provas` (`id`, `id_pergunta`, `modulo_pergunta`, `resposta`, `verdadeira`) VALUES (NULL, '4', '1', 'Compartilhar arquivos, criaÃ§Ã£o de arquivos diretamente na nuvem, armazenamento dos dados dos seu Smartphone', '1'), (NULL, '4', '1', 'Resposta errada 1', '0'), (NULL, '4', '1', 'Resposta errada 2', '0'), (NULL, '4', '1', 'Resposta errada 4', '0');

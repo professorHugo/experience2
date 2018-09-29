@@ -23,7 +23,7 @@ while($ResBuscarQuestoes = mysql_fetch_assoc($ExeQrBuscarQuestoesProvas)){
           ?>
           <p></p>
           <label class="col-md-3 text-justify" style="font-weight: 100;border:1px solid #ddd;min-height:100px">
-            <input type="radio" name="<?php echo $Resposta['id_pergunta']?>" value="<?php echo $Resposta['verdadeira']?>">
+            <input type="radio" name="<?php echo utf8_decode($Resposta['id_pergunta'])?>" value="<?php echo $Resposta['verdadeira']?>">
             <?php echo $Resposta['resposta'];?>
           </label>
           <?php
