@@ -73,11 +73,6 @@ $mensagem = '
 $enviar = sendMail('Cadastro no ' . $SITENAME, $mensagem, $mensagem, MAILUSER, $SITENAME, $EMailAluno, $NomeCompleto);
 //$enviar = sendMail('Cadastro no sistema ' . $SITENAME, $mensagem, $mensagem, MAILUSER, SITENAME, $EMailAluno, $NomeCompleto);
 
-if ($enviar) {
-    ?><script>alert("Email enviado");</script><?php
-} else {
-    ?><script>alert("Email não foi enviado");</script><?php
-}
 ?>
 <!-- Modal Cadastro Efetuado -->
 <div class="modal fade in text-muted" id="modalLoggedIn" tabindex="1" role="dialog" aria-labelledby="myModalLabel" style="display: block;margin-top:11%">

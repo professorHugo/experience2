@@ -9,6 +9,9 @@ if (isset($_POST['CadastrarAluno'])) {
     include 'parts/head.php';
     include_once 'parts/modal/CadastroEfetuado.php';
 }
+if (isset($_POST['EnviarSolicitacao'])){
+    include_once 'parts/EnviarRecuperaSenha.php';
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">

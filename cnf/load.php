@@ -43,7 +43,7 @@ function sendMail($assunto, $mensagem, $mensagemSemHTML, $remetente, $nomeRemete
 
 
     $mail->setFrom(utf8_decode($remetente), utf8_decode($nomeRemetente)); //Remetente
-    $mail->addAddress(utf8_decode(MAILUSER), utf8_decode(SITENAME));     // Destinatário
+    $mail->addAddress(utf8_decode(MAILUSER), utf8_decode($SITENAME));     // Destinatário
 
     if ($reply != NULL) {
         $mail->addReplyTo($reply, $replyNome);               //Responder para

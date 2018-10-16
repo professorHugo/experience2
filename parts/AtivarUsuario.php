@@ -26,7 +26,7 @@ if (isset($_GET['Ativar'])) {
                             <div class="modal-body">
                                 <div class="col-md-12 text-center">
                                     <p class="lead">
-                                        Olá <?php echo $NomeAtivar ?>, seja bem vindo ao Sistema <?php echo $SITENAME . ' - Unidade ' . $_POST['Unidade'] ?>
+                                        Olá <?php echo $NomeAtivar ?>, seja bem vindo ao Sistema <?php echo $SITENAME . ' - Unidade ' . $ResBuscarAtivar['unidade'] ?>
                                     </p>
                                     <hr>
                                     <p class="">
