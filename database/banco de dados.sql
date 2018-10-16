@@ -44,7 +44,7 @@ CREATE TABLE `aulas` (
  `link_documento` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT '?',
  `link_video` varchar(500) COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Link do vídeo usado na aula para apresentação do conetúdo',
  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci;
 
 
 /**
