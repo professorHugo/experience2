@@ -17,3 +17,8 @@ git push -u origin master
 24/04/2018 - Up to Date
 
 26/09/2018 - Continuação do projeto usando o GitHub junto com outros usuários e desenvolvedores
+
+16/10/2018 - Backup do banco de dados do laptop nome: n2yco435_experience
+16/10/2018 - Bug corrigido para conexão com banco de dados
+16/10/2018 - Interface de Atualização de cadastro do aluno criada e funcional
+16/10/2018 - Update dos dados do aluno na Session Atualizado
