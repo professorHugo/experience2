@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 16, 2018 at 08:17 PM
--- Server version: 5.7.14
--- PHP Version: 5.6.25
+-- Host: 127.0.0.1:3306
+-- Generation Time: 17-Out-2018 às 20:46
+-- Versão do servidor: 5.7.23
+-- versão do PHP: 5.6.38
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -23,22 +25,24 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `aulas`
+-- Estrutura da tabela `aulas`
 --
 
-CREATE TABLE `aulas` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `aulas`;
+CREATE TABLE IF NOT EXISTS `aulas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `numero_aula` int(1) NOT NULL,
   `titulo_aula` varchar(255) COLLATE utf8_general_mysql500_ci NOT NULL,
   `img_capa` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT 'img/default',
   `img_docs` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT 'img/img00',
   `link_apresentacao` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT '?',
   `link_documento` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT '?',
-  `link_video` varchar(500) COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Link do vídeo usado na aula para apresentação do conetúdo'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci;
+  `link_video` varchar(500) COLLATE utf8_general_mysql500_ci NOT NULL COMMENT 'Link do vídeo usado na aula para apresentação do conetúdo',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci;
 
 --
--- Dumping data for table `aulas`
+-- Extraindo dados da tabela `aulas`
 --
 
 INSERT INTO `aulas` (`id`, `numero_aula`, `titulo_aula`, `img_capa`, `img_docs`, `link_apresentacao`, `link_documento`, `link_video`) VALUES
@@ -54,18 +58,21 @@ INSERT INTO `aulas` (`id`, `numero_aula`, `titulo_aula`, `img_capa`, `img_docs`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `questoes_provas`
+-- Estrutura da tabela `questoes_provas`
 --
 
-CREATE TABLE `questoes_provas` (
-  `id_prova` int(11) NOT NULL,
+DROP TABLE IF EXISTS `questoes_provas`;
+CREATE TABLE IF NOT EXISTS `questoes_provas` (
+  `id_prova` int(11) NOT NULL AUTO_INCREMENT,
   `modulo_prova` int(11) NOT NULL,
   `pergunta_prova` varchar(500) COLLATE utf8_general_mysql500_ci NOT NULL,
-  `id_resposta_correta` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci;
+  `id_resposta_correta` int(11) NOT NULL,
+  PRIMARY KEY (`id_prova`),
+  KEY `modulo_prova` (`modulo_prova`)
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci;
 
 --
--- Dumping data for table `questoes_provas`
+-- Extraindo dados da tabela `questoes_provas`
 --
 
 INSERT INTO `questoes_provas` (`id_prova`, `modulo_prova`, `pergunta_prova`, `id_resposta_correta`) VALUES
@@ -113,19 +120,23 @@ INSERT INTO `questoes_provas` (`id_prova`, `modulo_prova`, `pergunta_prova`, `id
 -- --------------------------------------------------------
 
 --
--- Table structure for table `respostas_provas`
+-- Estrutura da tabela `respostas_provas`
 --
 
-CREATE TABLE `respostas_provas` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `respostas_provas`;
+CREATE TABLE IF NOT EXISTS `respostas_provas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_pergunta` int(11) NOT NULL,
   `modulo_pergunta` int(11) NOT NULL,
   `resposta` varchar(500) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
-  `verdadeira` int(1) DEFAULT '1' COMMENT '1: Verdadeira | 0: falsa'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci;
+  `verdadeira` int(1) DEFAULT '1' COMMENT '1: Verdadeira | 0: falsa',
+  PRIMARY KEY (`id`),
+  KEY `id_pergunta` (`id_pergunta`),
+  KEY `modulo_pergunta` (`modulo_pergunta`)
+) ENGINE=InnoDB AUTO_INCREMENT=161 DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci;
 
 --
--- Dumping data for table `respostas_provas`
+-- Extraindo dados da tabela `respostas_provas`
 --
 
 INSERT INTO `respostas_provas` (`id`, `id_pergunta`, `modulo_pergunta`, `resposta`, `verdadeira`) VALUES
@@ -293,11 +304,12 @@ INSERT INTO `respostas_provas` (`id`, `id_pergunta`, `modulo_pergunta`, `respost
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuarios`
+-- Estrutura da tabela `usuarios`
 --
 
-CREATE TABLE `usuarios` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `usuarios`;
+CREATE TABLE IF NOT EXISTS `usuarios` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `unidade` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT 'tatuape',
   `matricula` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
   `matricula_md5` varchar(255) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
@@ -325,15 +337,16 @@ CREATE TABLE `usuarios` (
   `prova8` int(11) DEFAULT '0',
   `permissao` int(11) DEFAULT '0' COMMENT '0 para alunos e 1 para prof 2 para adm',
   `ativado` int(1) DEFAULT '1' COMMENT '0 Para inativo, 1 para ativo',
-  `foto` varchar(250) COLLATE utf8_general_mysql500_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci;
+  `foto` varchar(250) COLLATE utf8_general_mysql500_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8 COLLATE=utf8_general_mysql500_ci;
 
 --
--- Dumping data for table `usuarios`
+-- Extraindo dados da tabela `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `unidade`, `matricula`, `matricula_md5`, `senha`, `senha_md5`, `nome`, `email`, `turma`, `idade`, `aula1`, `aula2`, `aula3`, `aula4`, `aula5`, `aula6`, `aula7`, `aula8`, `prova1`, `prova2`, `prova3`, `prova4`, `prova5`, `prova6`, `prova7`, `prova8`, `permissao`, `ativado`, `foto`) VALUES
-(1, 'Tatuape', 'experience', 'd6e047923b2b0f63a7a03c66074a0151', '123456', 'e10adc3949ba59abbe56e057f20f883e', 'Administrador', 'hugo@n2y.com.br', 'PEDAGÃ“GICO', 29, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, NULL),
+(1, 'Tatuape', 'experience', 'd6e047923b2b0f63a7a03c66074a0151', '123456', 'e10adc3949ba59abbe56e057f20f883e', 'Admin', 'hugo@n2y.com.br', 'PEDAGÃ“GICO', 29, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, NULL),
 (2, 'tatuape', '7060', 'ab4c389364232588a6680ad92ec170c7', 'experience', 'd6e047923b2b0f63a7a03c66074a0151', 'ANA CRISTINA BATISTA VINUTO', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
 (3, 'tatuape', '7022', '1f33d7cf6693dc6dcc7029b97cc29487', 'experience', 'd6e047923b2b0f63a7a03c66074a0151', 'CLAUDIA DA SILVA CARDOSO', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
 (4, 'tatuape', '7095', '7e185cc0ad0a719c730af5354d7142c1', 'experience', 'd6e047923b2b0f63a7a03c66074a0151', 'HENRIQUE BONAFEDE', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
@@ -346,7 +359,7 @@ INSERT INTO `usuarios` (`id`, `unidade`, `matricula`, `matricula_md5`, `senha`, 
 (11, 'tatuape', '1', 'c4ca4238a0b923820dcc509a6f75849b', 'experience', 'd6e047923b2b0f63a7a03c66074a0151', 'Wendel Vellado', NULL, NULL, 41, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, NULL),
 (12, 'tatuape', '2', 'c81e728d9d4c2f636f067f89cc14862c', 'csdl13231010', '3b66dd602072bd61d3766cef35ee1e9e', 'Hugo Christian', NULL, NULL, 28, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, NULL),
 (13, 'tatuape', '3', 'eccbc87e4b5ce2fe28308fd9f2a7baf3', 'gabriel2008', '842204891d179ec181fe428ff83a1e56', 'Gabriel Victor', NULL, NULL, 20, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, NULL),
-(14, 'tatuape', '7057', 'c4bfbf68f5d8d0f8b9a0752ca08ea01d', 'experience', 'd6e047923b2b0f63a7a03c66074a0151', '', NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
+(14, 'tatuape', '7057', 'c4bfbf68f5d8d0f8b9a0752ca08ea01d', 'experience', 'd6e047923b2b0f63a7a03c66074a0151', 'Teste', NULL, NULL, 10, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
 (15, 'tatuape', '7172', '1d0832c4969f6a4cc8e8a8fffe083efb', '211101', 'fcc2561c2e48efb36381a0b4273d658a', 'Ayhane', NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
 (16, 'tatuape', '7003', '204904e461002b28511d5880e1c36a0f', 'julinha', '4a04179913034ac34acfbd11b1ffb565', 'Brythanny', NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
 (17, 'tatuape', '7070', '08f0efebb1c51aada9430a089a2050cc', 'experience', 'd6e047923b2b0f63a7a03c66074a0151', 'Camile', NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
@@ -391,7 +404,6 @@ INSERT INTO `usuarios` (`id`, `unidade`, `matricula`, `matricula_md5`, `senha`, 
 (56, 'tatuape', '7122', 'df334b223e699294764c2bb7ae40d8db', 'experience', 'd6e047923b2b0f63a7a03c66074a0151', 'rafael vinicius', NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
 (57, 'tatuape', '7173', '162d18156abe38a3b32851b72b1d44f5', 'experience', 'd6e047923b2b0f63a7a03c66074a0151', 'renata gonÃ§alves', NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
 (58, 'tatuape', '7059', '84cdde86a4560c17d00c9c437fc2f0da', 'experience', 'd6e047923b2b0f63a7a03c66074a0151', 'valdelice', NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
-(59, 'tatuape', '7057', 'c4bfbf68f5d8d0f8b9a0752ca08ea01d', 'experience', 'd6e047923b2b0f63a7a03c66074a0151', 'alex freire', NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
 (61, 'tatuape', '7102', 'c9d9edbf9b9e23eb5d4819bbcce9b078', 'experience', 'd6e047923b2b0f63a7a03c66074a0151', 'gabriel de almeida', NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
 (62, 'tatuape', '7063', '68a15b5278e4f7c4c056df9d5f1d3b1f', 'experience', 'd6e047923b2b0f63a7a03c66074a0151', 'gabriela de oliveira', NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
 (63, 'tatuape', '7049', '169806bb68ccbf5e6f96ddc60c40a044', 'experience', 'd6e047923b2b0f63a7a03c66074a0151', 'gabrielli ingrid', NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
@@ -439,7 +451,7 @@ INSERT INTO `usuarios` (`id`, `unidade`, `matricula`, `matricula_md5`, `senha`, 
 (107, 'tatuape', '7275', 'bb921944c8c4531826da3fa99b494c1a', 'homer0211', '28f1bf6cbbc5bca89435f6004d49bbe2', 'Ketlyn', NULL, NULL, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
 (108, 'tatuape', '7271', '52fc2aee802efbad698503d28ebd3a1f', 'experience', 'd6e047923b2b0f63a7a03c66074a0151', 'Alex', NULL, NULL, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
 (109, 'tatuape', '7292', 'f0e6be4ce76ccfa73c5a540d992d0756', 'curtindo', '25b3dbe26dda82a580a453072379a375', 'MARCLICE ALICE BARBOSA', NULL, NULL, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
-(110, 'Tatuape', '12345', '827ccb0eea8a706c4c34a16891f84e7b', 'experience', 'd6e047923b2b0f63a7a03c66074a0151', 'Hugo Christian ', 'hugo@n2y.com.br', 'PedagÃ³gico', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL),
+(110, 'Tatuape', '12345', '827ccb0eea8a706c4c34a16891f84e7b', 'experience', 'd6e047923b2b0f63a7a03c66074a0151', 'Christian', 'hugo@n2y.com.br', 'PedagÃ³gico', 29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL),
 (111, 'tatuape', '7437', 'a4a83056b58ff983d12c72bb17996243', '123chiquinha', '7e38908212a8adc08fb9db7e13f009f2', 'ANA CAROLINE', NULL, 'A15-0004', 19, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
 (112, 'tatuape', '7055', 'e143c01e314f7b950daca31188cb5d0f', 'gabriel05', '5eaa5a03ad3a05d4ea21ba1238c5f9ce', 'ELIVELTON SANTOS', NULL, 'A15-0004', 19, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
 (113, 'tatuape', '7457', '9f820adf84bf8a1c259f464ba89ea11f', 'lovemirian', 'd1757e6cf12159a617ce171f00bcaf5a', 'JONATAS DAMASCENO', NULL, 'A15-0004', 19, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
@@ -457,79 +469,25 @@ INSERT INTO `usuarios` (`id`, `unidade`, `matricula`, `matricula_md5`, `senha`, 
 (126, 'tatuape', '7932', '7fc346397dc202259f27edc7d2adec88', '21708912Lu', 'fc0ceef07172ec92468e6ab6bd21aa45', 'LUIZA DIAS ALMEIDA', NULL, NULL, 16, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
 (127, 'tatuape', '7935', '439d8c975f26e5005dcdbf41b0d84161', 'mcgcjs28', '358d7b3480ae022e5d4b1e01214be8e2', 'CARLA JOCIANE', NULL, NULL, 39, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
 (128, 'tatuape', '7943', '0163cceb20f5ca7b313419c068abd9dc', 'anabeatriz1201', '10e68f0d22f2cb2cbb4db3e4397e51f9', 'ANA BEATRIZ SALDANHA', NULL, NULL, 14, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL),
-(131, 'Tatuape', '663', '8757150decbd89b0f5442ca3db4d0e0e', '123456', 'e10adc3949ba59abbe56e057f20f883e', 'Hugo Christian', 'hugo.allnet@gmail.com', 'Experience', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL);
+(131, 'Tatuape', '663', '8757150decbd89b0f5442ca3db4d0e0e', '123456', 'e10adc3949ba59abbe56e057f20f883e', 'Hugo Christian Pereira Gomes', 'hugo.allnet@gmail.com', 'Experience', 29, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL);
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `aulas`
---
-ALTER TABLE `aulas`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `questoes_provas`
---
-ALTER TABLE `questoes_provas`
-  ADD PRIMARY KEY (`id_prova`),
-  ADD KEY `modulo_prova` (`modulo_prova`);
-
---
--- Indexes for table `respostas_provas`
---
-ALTER TABLE `respostas_provas`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_pergunta` (`id_pergunta`),
-  ADD KEY `modulo_pergunta` (`modulo_pergunta`);
-
---
--- Indexes for table `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `aulas`
---
-ALTER TABLE `aulas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
---
--- AUTO_INCREMENT for table `questoes_provas`
---
-ALTER TABLE `questoes_provas`
-  MODIFY `id_prova` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
---
--- AUTO_INCREMENT for table `respostas_provas`
---
-ALTER TABLE `respostas_provas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
---
--- AUTO_INCREMENT for table `usuarios`
---
-ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `questoes_provas`
+-- Limitadores para a tabela `questoes_provas`
 --
 ALTER TABLE `questoes_provas`
   ADD CONSTRAINT `questoes_provas_ibfk_1` FOREIGN KEY (`modulo_prova`) REFERENCES `aulas` (`id`);
 
 --
--- Constraints for table `respostas_provas`
+-- Limitadores para a tabela `respostas_provas`
 --
 ALTER TABLE `respostas_provas`
   ADD CONSTRAINT `respostas_provas_ibfk_1` FOREIGN KEY (`id_pergunta`) REFERENCES `questoes_provas` (`id_prova`),
   ADD CONSTRAINT `respostas_provas_ibfk_2` FOREIGN KEY (`modulo_pergunta`) REFERENCES `aulas` (`id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

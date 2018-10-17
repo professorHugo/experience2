@@ -22,3 +22,5 @@ git push -u origin master
 16/10/2018 - Bug corrigido para conexão com banco de dados
 16/10/2018 - Interface de Atualização de cadastro do aluno criada e funcional
 16/10/2018 - Update dos dados do aluno na Session Atualizado
+
+17/10/2018 - Update dos dados do aluno nas AULAS E DADOS PESSOAIS
