@@ -1,11 +1,13 @@
 <?php
 #Alterar cadastro do aluno#
-if (isset($_POST['UpdateAluno'])) {
-
+if (isset($_POST['AtualizarAluno'])) {
+    //fazer programação para alterar dados do aluno
+    include_once 'parts/modal/UpdateAluno.php';
+    
 } else {
-
     ?>
-    <form action="?page=Consultar_Alunos" method="post" class="form-inline">
+    <hr>
+    <form action="?page=Consultar_Alunos" method="post" class="">
         <div class="form-group col-xs-11 col-sm-4 col-md-3 col-lg-3">
             <label for="MatriculaDoAluno" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">Matrícula: </label>
             <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
@@ -27,15 +29,20 @@ if (isset($_POST['UpdateAluno'])) {
     </form>
 
     <?php
-    if (isset($_POST['MatriculaDoAluno'])) {
+    if (isset($_POST['MatriculaDoAluno']) && $_POST['MatriculaDoAluno'] !== "") {
         $Matricula = $_POST['MatriculaDoAluno'];
-        $QueryBuscarAulasTodosUsuarios = "SELECT * FROM usuarios WHERE matricula = '$Matricula' AND permissao = 0";
+         "<br>";
+         $QueryBuscarAulasTodosUsuarios = "SELECT * FROM usuarios WHERE matricula = '$Matricula' AND permissao = 0";
     }
-    if (isset($_POST['NomeDoAluno'])) {
+    if (isset($_POST['NomeDoAluno']) && $_POST['NomeDoAluno'] !== "") {
         $NomeDoAluno = $_POST['NomeDoAluno'];
-        $QueryBuscarAulasTodosUsuarios = "SELECT * FROM usuarios WHERE nome LIKE '%$NomeDoAluno%' AND permissao = 0";
+         "<br>";
+         $QueryBuscarAulasTodosUsuarios = "SELECT * FROM usuarios WHERE nome LIKE '%$NomeDoAluno%' AND permissao = 0";
     } else {
-        $QueryBuscarAulasTodosUsuarios = "SELECT * FROM usuarios WHERE permissao = 0";
+        if(!isset($_POST['MatriculaDoAluno']) || !isset($_POST['NomeDoAluno'])){
+             "<br>";
+             $QueryBuscarAulasTodosUsuarios = "SELECT * FROM usuarios WHERE permissao = 0";
+        }
     }
     $ExeQrBuscarAulasTodosUsuarios = mysql_query($QueryBuscarAulasTodosUsuarios);
     ?>
