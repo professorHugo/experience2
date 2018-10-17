@@ -32,16 +32,16 @@ if (isset($_POST['AtualizarAluno'])) {
     if (isset($_POST['MatriculaDoAluno']) && $_POST['MatriculaDoAluno'] !== "") {
         $Matricula = $_POST['MatriculaDoAluno'];
          "<br>";
-         $QueryBuscarAulasTodosUsuarios = "SELECT * FROM usuarios WHERE matricula = '$Matricula' AND permissao = 0";
+         $QueryBuscarAulasTodosUsuarios = "SELECT * FROM usuarios WHERE matricula = '$Matricula' AND permissao = 0 ORDER BY nome ASC";
     }
     if (isset($_POST['NomeDoAluno']) && $_POST['NomeDoAluno'] !== "") {
         $NomeDoAluno = $_POST['NomeDoAluno'];
          "<br>";
-         $QueryBuscarAulasTodosUsuarios = "SELECT * FROM usuarios WHERE nome LIKE '%$NomeDoAluno%' AND permissao = 0";
+         $QueryBuscarAulasTodosUsuarios = "SELECT * FROM usuarios WHERE nome LIKE '%$NomeDoAluno%' AND permissao = 0 ORDER BY nome ASC";
     } else {
         if(!isset($_POST['MatriculaDoAluno']) || !isset($_POST['NomeDoAluno'])){
              "<br>";
-             $QueryBuscarAulasTodosUsuarios = "SELECT * FROM usuarios WHERE permissao = 0";
+             $QueryBuscarAulasTodosUsuarios = "SELECT * FROM usuarios WHERE permissao = 0 ORDER BY nome ASC";
         }
     }
     $ExeQrBuscarAulasTodosUsuarios = mysql_query($QueryBuscarAulasTodosUsuarios);
