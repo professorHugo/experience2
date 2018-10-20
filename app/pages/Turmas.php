@@ -1,51 +1,9 @@
 <?php
-if(isset($_POST['SalvarTurma'])){
-    echo "Vai cadastrar a turma no sistema";
-    echo "<br>";
-    echo $Turma = $_POST['NomeDaTurma'];
-    echo "<br>";
-    echo $Professor = $_POST['Professor'];
-    echo "<br>";
-    echo $Curso = $_POST['Curso'];
-    echo "<br>";
-    echo $Horario = $_POST['Horario'];
-    //Programar Cadastro da turma
-}
-
-if(isset($_POST['CadastrarHorarioTurma'])){
-    echo "Vai cadastrar Horário da turma";
-    echo "<br>";
-    echo "Horario Inicial: ";
-    echo $HorarioInicial = $_POST['HorarioInicial'];
-    echo "<br>";
-    echo "Horario Final: ";
-    echo $HorarioFinal = $_POST['HorarioFinal'];
-    echo "<br>";
-    //Programação para cadastrar os horários das aulas
-    $QueryCadastrarHorariosAulas = "INSERT INTO horario_aula(horario_entrada,horario_saida) VALUE('$HorarioInicial','$HorarioFinal')";
-    
-    //Verificar se há horário já cadastrado com os dados informados
-    $QueryVerificaExistenciaHorario = "SELECT * FROM horario_aula WHERE horario_entrada = '$HorarioInicial' AND horario_saida = '$HorarioFinal'";
-    $ExeQrVerificarExistenciaHorario = mysql_query($QueryVerificaExistenciaHorario);
-    if(mysql_num_rows($ExeQrVerificarExistenciaHorario) >= 1){
-        echo "Esse Horario já está Cadastrado";
-    }else{
-        echo "Horário ainda não cadastrado";
-        $ExeQrCadastrarHorariosAulas = mysql_query($QueryCadastrarHorariosAulas);
-    
-        if($ExeQrCadastrarHorariosAulas){
-            echo "<br>";
-            echo "Horario Cadastrado";
-        }else{
-            echo "<br>";
-            echo "Horario não cadastrado";
-        }
-    }
-    
-}
+include_once 'parts/CadastrarTurma.php';
+include_once 'parts/CadastrarHorarioTurma.php';
 ?>
-<h3>Pesquisar / Cadastrar: Turmas e horários</h3>
 <div class="col-md-6">
+   <h3>Pesquisar por nome: </h3>
     <form action="index.php?page=Turmas" class="form-inline" method="post">
         <div class="form-group">
             <label for="NomeTurma">Nome da Turma:</label>
@@ -58,6 +16,7 @@ if(isset($_POST['CadastrarHorarioTurma'])){
     </form>
 </div>
 <div class="col-md-6">
+   <h3>Pesquisar por Horário: </h3>
     <form action="index.php?page=Turmas" class="form-inline" method="post">
         <div class="form-group">
             <label for="PesquisarHorarioInicial">Horario Turma:</label>
@@ -84,15 +43,57 @@ if(isset($_POST['CadastrarHorarioTurma'])){
     </form>
 </div>
 
-<?php include_once'parts/FormCadastrarTurma.php' ?>
-<?php include_once'parts/FormCadastrarHorarioTurma.php' ?>
-
-
-<?php
+<div class="clearfix" style="margin-bottom:15px"></div>
+<table class="table table-striped table-responsive table-hover table-bordered text-center">
+    <tr>
+        <td>ID</td>
+        <td>Turma</td>
+        <td>Professor</td>
+        <td>Curso</td>
+        <td>Entrada</td>
+        <td>Saída</td>
+        <td>Configurar</td>
+    </tr>
+    <?php
     if(isset($_POST['PesquisarTurma'])){
         if($_POST['NomeTurma'] !== ""){
             $Turma = $_POST['NomeTurma'];
-            echo "Turma procurada: <b>$Turma</b>";
+            echo "Turma procurada: <b>$Turma</b><br>";
+            echo $QueryBuscarTurmaPorNome = "SELECT * FROM turmas WHERE nome_turma LIKE '%".$Turma."%'";
+            $ExeQrBuscarTurmaPorNome = mysql_query($QueryBuscarTurmaPorNome);
+            if($ExeQrBuscarTurmaPorNome){
+                while($ReturnTurmas = mysql_fetch_assoc($ExeQrBuscarTurmaPorNome)){
+                    ?>
+                    <tr>
+                        <td>
+                            <?php echo $ReturnTurmas['id']?>
+                        </td>
+                        <td>
+                            <?php echo $ReturnTurmas['nome_turma']?>
+                        </td>
+                        <td>
+                            <?php echo $ReturnTurmas['professor_turma']?>
+                        </td>
+                        <td>
+                            <?php echo $ReturnTurmas['curso_turma']?>
+                        </td>
+                        <td>
+                            <?php echo $ReturnTurmas['horario_entrada_turma']?>
+                        </td>
+                        <td>
+                            <?php echo $ReturnTurmas['horario_saida_turma']?>
+                        </td>
+                        <td>
+                           <button type="button" class="btn btn-warning" data-toggle="modal" data-target=".ConfigurarTurma<?php echo $ReturnTurmas['id']?>">
+                               <i class="glyphicon glyphicon-cog"></i>
+                           </button>
+                        </td>
+                    </tr>
+                    <?php
+                    //Criar Modal para configurar turma
+                    include 'parts/modal/System/ModalConfigurarTurma.php';
+                }
+            }
         }else{
             echo "Exibir todas as turmas";
         }
@@ -107,3 +108,7 @@ if(isset($_POST['CadastrarHorarioTurma'])){
         }        
     }
 ?>
+</table>
+
+<?php include_once'parts/FormCadastrarTurma.php' ?>
+<?php include_once'parts/FormCadastrarHorarioTurma.php' ?>

@@ -42,7 +42,14 @@
                     <li><a href="?page=Documents"><i class="glyphicon glyphicon-book"></i> Documentos</a></li>
                     <li><a href="?page=Videos"><i class="glyphicon glyphicon-film"></i> Vídeos</a></li>
                     <li><a href="?page=Tests"><i class="glyphicon glyphicon-file"></i> Provas</a></li>
-                    <li><a href="?page=Turmas"><i class="glyphicon glyphicon-education"></i> Turmas</a></li>
+                    
+                    <?php
+                    if($PermLogado == "Administrador"){
+                        ?>
+                        <li><a href="?page=Turmas"><i class="glyphicon glyphicon-education"></i> Turmas</a></li>
+                        <?php
+                    }
+                    ?>
                 </ul>
             </li>
             <li class="treeview">

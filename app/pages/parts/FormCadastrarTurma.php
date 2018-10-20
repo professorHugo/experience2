@@ -56,12 +56,43 @@
                                 ?>
                             </select>
                         </div>
-                        <div class="col-md-8">
-                            <label for="Horario">Horario: </label>
-                            <select name="Horario" id="Horario" class="form-control">
-                                <option value=""></option>
+                        <div class="col-md-4">
+                            <label for="HorarioEntrada">Horario Entrada: </label>
+                            <select name="HorarioEntrada" id="HorarioEntrada" class="form-control">
+                                <?php
+                                $QueryBuscarHorariosEntrada = "SELECT * FROM horario_aula ORDER BY horario_entrada ASC";
+                                $ExeQrBuscarHorariosEntrada = mysql_query($QueryBuscarHorariosEntrada);
+                                if(mysql_num_rows($ExeQrBuscarHorariosEntrada) >= 1){
+                                    while($ReturnHEntrada = mysql_fetch_assoc($ExeQrBuscarHorariosEntrada)){
+                                        ?>
+                                        <option value="<?php echo $ReturnHEntrada['horario_entrada']?>">
+                                            <?php echo $ReturnHEntrada['horario_entrada']?>:00
+                                        </option>
+                                        <?php
+                                    }
+                                }
+                                ?>
                             </select>
                         </div>
+                        <div class="col-md-4">
+                            <label for="HorarioSaida">Horario Saída: </label>
+                            <select name="HorarioSaida" id="HorarioSaida" class="form-control">
+                                <?php
+                                $QueryBuscarHorariosSaida = "SELECT * FROM horario_aula ORDER BY horario_saida ASC";
+                                $ExeQrBuscarHorariosSaida = mysql_query($QueryBuscarHorariosSaida);
+                                if(mysql_num_rows($ExeQrBuscarHorariosSaida) >= 1){
+                                    while($ReturnHSaida = mysql_fetch_assoc($ExeQrBuscarHorariosSaida)){
+                                        ?>
+                                        <option value="<?php echo $ReturnHSaida['horario_saida']?>">
+                                            <?php echo $ReturnHSaida['horario_saida']?>:00
+                                        </option>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        
                     </div>
                 </div>
                 <div class="clearfix"></div>
