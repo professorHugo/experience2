@@ -56,19 +56,52 @@ include_once 'parts/CadastrarHorarioTurma.php';
     </tr>
     <?php
     if(isset($_POST['PesquisarTurma']) && !empty($_POST['NomeTurma'])){
-        echo "Turma Pesquisada: ".$Turma = $_POST['NomeTurma'];
+        "Turma Pesquisada: ".$Turma = $_POST['NomeTurma'];
         include 'parts/PesquisarTurmaPorNome.php';
-    }else if($_POST['NomeTurma'] == ""){
+    }else if($_POST['NomeTurma'] == "" && !isset($_POST['PesquisarHorario'])){
         //echo "Exibir todas as turmas";
         //echo "Turma Pesquisada: ".$Turma = $_POST['NomeTurma'];
         include 'parts/PesquisarTodasAsTurmas.php';
     }
 
     if(isset($_POST['PesquisarHorario'])){
-        if($_POST['PesquisarHorario'] !== ""){
-            $Horario = $_POST['PesquisarHorario'];
-            echo "Horario Pesquisado: <b>$Horario</b>";
-        }        
+        $Horario = $_POST['PesquisarHorarioInicial'];
+        "Horario Pesquisado: <b>$Horario</b><br>";
+        $QueryBuscarTurmaPorHorario = "SELECT * FROM turmas WHERE horario_entrada_turma = '$Horario'";
+        $ExeQrBuscarTurmasPorHorario = mysql_query($QueryBuscarTurmaPorHorario);
+        if(mysql_num_rows($ExeQrBuscarTurmasPorHorario) >= 1){
+            while($ReturnTurmas = mysql_fetch_assoc($ExeQrBuscarTurmasPorHorario)){
+            ?>
+                <tr>
+                    <td>
+                        <?php echo $ReturnTurmas['id']?>
+                    </td>
+                    <td>
+                        <?php echo $ReturnTurmas['nome_turma']?>
+                    </td>
+                    <td>
+                        <?php echo $ReturnTurmas['professor_turma']?>
+                    </td>
+                    <td>
+                        <?php echo $ReturnTurmas['curso_turma']?>
+                    </td>
+                    <td>
+                        <?php echo $ReturnTurmas['horario_entrada_turma']?>
+                    </td>
+                    <td>
+                        <?php echo $ReturnTurmas['horario_saida_turma']?>
+                    </td>
+                    <td>
+                       <button type="button" class="btn btn-warning" data-toggle="modal" data-target=".ConfigurarTurma<?php echo $ReturnTurmas['id']?>">
+                           <i class="glyphicon glyphicon-cog"></i>
+                       </button>
+                    </td>
+                </tr>
+                <?php
+                //Criar Modal para configurar turma
+                include 'parts/modal/System/ModalConfigurarTurma.php';
+            }
+        }
     }
 ?>
 </table>

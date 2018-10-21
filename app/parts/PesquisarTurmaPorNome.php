@@ -38,7 +38,7 @@ if($_POST['NomeTurma'] !== ""){
         }
     }
 }elseif($_POST['NomeTurma'] == ""){
-    echo "Exibir todas as turmas";
+    "Exibir todas as turmas";
     $ExeQrBuscarTodasAsTurmas = mysql_query($QueryBuscarTodasAsTurmas);
 
     if($ExeQrBuscarTodasAsTurmas){
