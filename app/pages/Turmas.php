@@ -55,50 +55,13 @@ include_once 'parts/CadastrarHorarioTurma.php';
         <td>Configurar</td>
     </tr>
     <?php
-    if(isset($_POST['PesquisarTurma'])){
-        if($_POST['NomeTurma'] !== ""){
-            $Turma = $_POST['NomeTurma'];
-            echo "Turma procurada: <b>$Turma</b><br>";
-            echo $QueryBuscarTurmaPorNome = "SELECT * FROM turmas WHERE nome_turma LIKE '%".$Turma."%'";
-            $ExeQrBuscarTurmaPorNome = mysql_query($QueryBuscarTurmaPorNome);
-            if($ExeQrBuscarTurmaPorNome){
-                while($ReturnTurmas = mysql_fetch_assoc($ExeQrBuscarTurmaPorNome)){
-                    ?>
-                    <tr>
-                        <td>
-                            <?php echo $ReturnTurmas['id']?>
-                        </td>
-                        <td>
-                            <?php echo $ReturnTurmas['nome_turma']?>
-                        </td>
-                        <td>
-                            <?php echo $ReturnTurmas['professor_turma']?>
-                        </td>
-                        <td>
-                            <?php echo $ReturnTurmas['curso_turma']?>
-                        </td>
-                        <td>
-                            <?php echo $ReturnTurmas['horario_entrada_turma']?>
-                        </td>
-                        <td>
-                            <?php echo $ReturnTurmas['horario_saida_turma']?>
-                        </td>
-                        <td>
-                           <button type="button" class="btn btn-warning" data-toggle="modal" data-target=".ConfigurarTurma<?php echo $ReturnTurmas['id']?>">
-                               <i class="glyphicon glyphicon-cog"></i>
-                           </button>
-                        </td>
-                    </tr>
-                    <?php
-                    //Criar Modal para configurar turma
-                    include 'parts/modal/System/ModalConfigurarTurma.php';
-                }
-            }
-        }else{
-            echo "Exibir todas as turmas";
-        }
-    }else{
-        echo "Exibir todas as turmas";
+    if(isset($_POST['PesquisarTurma']) && !empty($_POST['NomeTurma'])){
+        echo "Turma Pesquisada: ".$Turma = $_POST['NomeTurma'];
+        include 'parts/PesquisarTurmaPorNome.php';
+    }else if($_POST['NomeTurma'] == ""){
+        //echo "Exibir todas as turmas";
+        //echo "Turma Pesquisada: ".$Turma = $_POST['NomeTurma'];
+        include 'parts/PesquisarTodasAsTurmas.php';
     }
 
     if(isset($_POST['PesquisarHorario'])){
