@@ -1,6 +1,9 @@
 <?php
 include_once 'parts/CadastrarTurma.php';
 include_once 'parts/CadastrarHorarioTurma.php';
+if(isset($_POST['SalvarConfiguracao'])){
+    include_once 'parts/modal/System/SalvarConfiguracaoTurma.php';
+}
 ?>
 <div class="col-md-6">
    <h3>Pesquisar por nome: </h3>
@@ -80,10 +83,30 @@ include_once 'parts/CadastrarHorarioTurma.php';
                         <?php echo $ReturnTurmas['nome_turma']?>
                     </td>
                     <td>
-                        <?php echo $ReturnTurmas['professor_turma']?>
+                        <?php
+                            $Professor = $ReturnTurmas['professor_turma'];
+                            $QueryBuscarProfessor = "SELECT * FROM usuarios WHERE id = '$Professor'";
+                            $ExeQrBuscarProfessor = mysql_query($QueryBuscarProfessor);
+                            if(mysql_num_rows($ExeQrBuscarProfessor) >= 1){
+                                while($NomeProfessor = mysql_fetch_assoc($ExeQrBuscarProfessor)){
+                                    echo $NomeProfessor['nome'];
+                                }
+                            }
+
+                        ?>
                     </td>
                     <td>
-                        <?php echo $ReturnTurmas['curso_turma']?>
+                        <?php
+                        $Curso = $ReturnTurmas['curso_turma'];
+                        $QueryBuscarCurso = "SELECT * FROM cursos WHERE id = '$Curso'";
+                        $ExeQrBuscarCurso = mysql_query($QueryBuscarCurso);
+                        if(mysql_num_rows($ExeQrBuscarCurso) >= 1){
+                            while($NomeCurso = mysql_fetch_assoc($ExeQrBuscarCurso)){
+                                echo $NomeCurso['nome_curso'];
+                            }
+                        }
+                        
+                        ?>
                     </td>
                     <td>
                         <?php echo $ReturnTurmas['horario_entrada_turma']?>
