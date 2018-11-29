@@ -34,21 +34,21 @@
                         </div>
                         <div class="col-md-3">
                             <label for="Status">Status:</label>
-                            <select name="status" class="form-control">
+                            <select name="Status" class="form-control">
                                <?php
                                 $Turma = $ReturnTurmas['id'];
                                 $QueryBuscarStatus = "SELECT * FROM turmas WHERE id = '$Turma'";
                                 $ExeQrBuscarStatus = mysql_query($QueryBuscarStatus);
                                 while($ReturnStatus = mysql_fetch_assoc($ExeQrBuscarStatus)){
                                     $ReturnStatusA = $ReturnStatus['turma_confirmada'];
-                                    if($ReturnStatusA == 1){
+                                    if($ReturnStatusA == '1'){
                                         ?>
-                                        <option value="1" selected disabled>Ativada</option>
+                                        <option value="1" selected>Ativada</option>
                                         <option value="0">Desativar</option>
                                         <?php
                                     }else{
                                         ?>
-                                        <option value="0" selected disabled>Desativada</option>
+                                        <option value="0" selected>Desativada</option>
                                         <option value="1">Ativar</option>
                                         <?php
                                     }
@@ -99,7 +99,6 @@
                     <input type="hidden" name="h_entrada" value="<?php echo $ReturnTurma['horario_entrada_turma']?>">
                     <input type="hidden"  name="h_saida" value="<?php echo $ReturnTurma['horario_saida_turma']?>">
                     <input type="hidden"  name="professor" value="<?php echo $Professor?>">
-                    <input type="hidden" name="Confirmar" value="1">
                     <button class="btn btn-default" data-dismiss="modal">Fechar</button>
                     <button class="btn btn-primary" name="SalvarConfiguracao">Salvar</button>
                 </div>
